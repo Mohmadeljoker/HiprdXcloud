@@ -1,0 +1,10 @@
+gpu-cloud-backend/
+│
+├── app/
+│   ├── main.py
+│   ├── model.py
+│   └── __init__.py
+│
+├── requirements.txt
+├── Dockerfile
+└── README.md
