@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>HybridX GPU Processor</title>
+    <style>
+        body { background:#111; color:#fff; text-align:center; padding:50px; font-family:Arial; }
+        button { padding:12px 25px; font-size:20px; background:#ff3e3e; color:white; border:none; border-radius:8px; cursor:pointer; }
+        #result { margin-top:30px; background:#222; padding:15px; border-radius:8px; font-size:20px; }
+        input { margin:20px 0; }
+    </style>
+</head>
+<body>
+
+<h1>معالجة البيانات عبر GPU</h1>
+<p>ارفع ملف البيانات ثم اضغط "إجراء".</p>
+
+<input type="file" id="fileInput">
+<br>
+<button onclick="processData()">إجراء</button>
+
+<div id="result"></div>
+
+<script>
+async function processData() {
+    const fileInput = document.getElementById("fileInput");
+    const resultBox = document.getElementById("result");
+
+    if (!fileInput.files.length) {
+        resultBox.innerHTML = "من فضلك اختر ملفاً أولاً";
+        return;
+    }
+
+    let formData = new FormData();
+    formData.append("file", fileInput.files[0]);
+
+    resultBox.innerHTML = "جاري المعالجة…";
+
+    try {
+        let response = await fetch("YOUR_BACKEND_URL/process", {
+            method: "POST",
+            body: formData
+        });
+
+        let data = await response.json();
+        resultBox.innerHTML = JSON.stringify(data, null, 2);
+    } catch (err) {
+        resultBox.innerHTML = "خطأ في الاتصال بالسيرفر";
+    }
+}
+</script>
+
+</body>
+</html>
