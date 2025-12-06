@@ -1,0 +1,26 @@
+from fastapi import FastAPI, Form
+from fastapi.middleware.cors import CORSMiddleware
+from app.model import GPUProcessor
+
+app = FastAPI(title="GPU Cloud Processing Server")
+
+# CORS للسماح للفرونت إند بالتواصل (اختياري حالياً)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+processor = GPUProcessor()
+
+
+@app.post("/process")
+async def process_data(
+    cloud_data: str = Form(...)
+):
+    """
+    يستقبل بيانات ثقيلة من العميل ويعالجها على GPU
+    """
+    result = processor.run(cloud_data)
+    return {"status": "success", "gpu_result": result}
