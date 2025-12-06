@@ -1,0 +1,23 @@
+import torch
+
+class GPUProcessor:
+    def __init__(self):
+        # Detect GPU
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+    def run(self, data: str):
+        """
+        معالجة بيانات نصية على معالج GPU كمثال
+        """
+        # مثال: تحويل طول النص إلى Tensor ومعالجته على GPU
+        length = len(data)
+        tensor = torch.tensor([length], device=self.device)
+
+        # عملية بسيطة: الضرب ×10 على GPU
+        output = (tensor * 10).item()
+
+        return {
+            "device": str(self.device),
+            "received_length": length,
+            "processed_output": output
+        }
